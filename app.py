@@ -1,13 +1,17 @@
 from io import BytesIO
 import cv2
 import os
-from flask import Flask, request, render_template, redirect, send_file, session, url_for
+from flask import Flask, request, render_template, redirect, send_file, session, url_for, jsonify
+from geopy.distance import geodesic
 from datetime import date, datetime
 import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 import pandas as pd
 import joblib
 import qrcode
+import pyzbar
+import sys
+
 try:
     from pyzbar.pyzbar import decode
     pyzbar_available = True
@@ -294,6 +298,7 @@ def generate_qr(name):
     img_io.seek(0)
     
     return send_file(img_io, mimetype='image/png')
+
 
 # Main function to run the Flask App
 if __name__ == '__main__':
